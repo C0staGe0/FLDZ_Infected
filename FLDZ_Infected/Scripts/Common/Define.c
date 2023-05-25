@@ -1,0 +1,1 @@
+#define FLDZ_Infected
