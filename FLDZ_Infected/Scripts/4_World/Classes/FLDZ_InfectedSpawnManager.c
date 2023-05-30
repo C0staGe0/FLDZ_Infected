@@ -46,7 +46,7 @@ class InfectedSpawnManager
         Print("[FLDZ_InfectedSpawnManager] Spawn position: " + spawnPosition);
 
         return spawnPosition;
-}
+    }
 
 
     void SpawnInfectedEntities()
