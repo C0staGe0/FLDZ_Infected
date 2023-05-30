@@ -36,8 +36,9 @@ class InfectedSpawnManager
     {
         float xAdd = Math.RandomFloat(-radius, radius);
         float zAdd = Math.RandomFloat(-radius, radius);
-        float xPos = xAdd + 3000;
-        float zPos = zAdd + 4000;
+
+        float xPos = Math.RandomFloat(0, 6000) + xAdd;
+        float zPos = Math.RandomFloat(0, 8000) + zAdd;
 
         vector spawnPosition = Vector(xPos, GetGame().SurfaceY(xPos, zPos), zPos);
 
@@ -45,7 +46,8 @@ class InfectedSpawnManager
         Print("[FLDZ_InfectedSpawnManager] Spawn position: " + spawnPosition);
 
         return spawnPosition;
-    }
+}
+
 
     void SpawnInfectedEntities()
     {
