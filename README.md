@@ -6,7 +6,7 @@ A simple DayZ Mod for spawning a Horde of Infected. All it does is spawn an amou
 There is no licence attached to this mod, simply because there is no point as script will always be looked through. 
 All i ask is that credits be given and maybe a link or something. If you want to repack it, crack on but you won’t get the updates as and when I do them. Repacking mods is poo and achieves nothing other than making your server mod list shorter and making everyone download an already downloaded mod again. 
 
-# Version 0.0.1
+# Version 0.0.2
 This is very basic as of now but i intend on making it bigger and better. If anyone has an idea or ways to improve i am all ears and open to contribution if you wish.
 
 # Default Config
@@ -20,11 +20,12 @@ InfectedSpawnAmount = 10; // Amount of infected to spawn
 SpawnRadius = 1000; // Radius in meters around the center of the map to spawn infected
 
 ```{
-    "ConfigVersion": "0.0.1",
+    "ConfigVersion": "0.0.2",
     "EnableInfectedSpawn": 1,
-    "InfectedSpawnDelayAfterStartInMinutes": 5,
+    "InfectedSpawnDelayAfterStartInMinutes": 1,
     "InfectedSpawnAmount": 10,
     "SpawnRadius": 1000,
+    "CanSpawnContainer": 1,
     "InfectedClassNames_1": [
         "ZmbM_priestPopSkinny",
         "ZmbM_SkaterYoung_Grey",
@@ -173,6 +174,40 @@ SpawnRadius = 1000; // Radius in meters around the center of the map to spawn in
         "ZmbM_PatrolNormal_Flat",
         "ZmbM_PatrolNormal_PautRev",
         "ZmbM_PatrolNormal_Summer"
+    ],
+    "ContainerObject": [
+        "SeaChest",
+        "Barrel_Blue",
+        "Barrel_Green",
+        "Barrel_Red",
+        "Barrel_Yellow",
+        "BarrelHoles_Blue",
+        "BarrelHoles_Green",
+        "BarrelHoles_Red",
+        "BarrelHoles_Yellow"
+    ],
+    "ContainerObjectLoot": [
+        "M4A1_Green",
+        "M4_RISHndgrd_Green",
+        "M4_MPBttstck",
+        "M4_Suppressor",
+        "ACOGOptic",
+        "Mag_STANAG_30Rnd",
+        "Ammo_556x45",
+        "Ammo_556x45",
+        "HuntingKnife",
+        "BakedBeansCan",
+        "Canteen",
+        "Battery9V",
+        "WaterBottle",
+        "SpaghettiCan",
+        "UMP45",
+        "M68Optic",
+        "PistolSuppressor",
+        "Mag_UMP_25Rnd",
+        "Ammo_45ACP",
+        "TunaCan",
+        "RDG5Grenade"
     ]
 }
 ```
