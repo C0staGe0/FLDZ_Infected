@@ -1,9 +1,10 @@
 {
-    "ConfigVersion": "0.0.1",
+    "ConfigVersion": "0.0.2",
     "EnableInfectedSpawn": 1,
-    "InfectedSpawnDelayAfterStartInMinutes": 5,
+    "InfectedSpawnDelayAfterStartInMinutes": 1,
     "InfectedSpawnAmount": 10,
     "SpawnRadius": 1000,
+    "CanSpawnContainer": 1,
     "InfectedClassNames_1": [
         "ZmbM_priestPopSkinny",
         "ZmbM_SkaterYoung_Grey",
@@ -152,5 +153,39 @@
         "ZmbM_PatrolNormal_Flat",
         "ZmbM_PatrolNormal_PautRev",
         "ZmbM_PatrolNormal_Summer"
+    ],
+    "ContainerObject": [
+        "SeaChest",
+        "Barrel_Blue",
+        "Barrel_Green",
+        "Barrel_Red",
+        "Barrel_Yellow",
+        "BarrelHoles_Blue",
+        "BarrelHoles_Green",
+        "BarrelHoles_Red",
+        "BarrelHoles_Yellow"
+    ],
+    "ContainerObjectLoot": [
+        "M4A1_Green",
+        "M4_RISHndgrd_Green",
+        "M4_MPBttstck",
+        "M4_Suppressor",
+        "ACOGOptic",
+        "Mag_STANAG_30Rnd",
+        "Ammo_556x45",
+        "Ammo_556x45",
+        "HuntingKnife",
+        "BakedBeansCan",
+        "Canteen",
+        "Battery9V",
+        "WaterBottle",
+        "SpaghettiCan",
+        "UMP45",
+        "M68Optic",
+        "PistolSuppressor",
+        "Mag_UMP_25Rnd",
+        "Ammo_45ACP",
+        "TunaCan",
+        "RDG5Grenade"
     ]
 }
