@@ -18,12 +18,12 @@ class InfectedSpawnManager
 
             if (m_InfectedSpawnDelay > 0)
             {
-                // Implement delay logic here before calling SpawnInfectedEntities() function
-                GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SpawnInfectedEntities, m_InfectedSpawnDelay * 60 * 1000);
+                // Implement delay logic here before calling SpawnInfectedEntitiesAndContainer() function
+                GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SpawnInfectedEntitiesAndContainer, m_InfectedSpawnDelay * 60 * 1000);
             }
             else
             {
-                SpawnInfectedEntities();
+                SpawnInfectedEntitiesAndContainer();
             }
         }
         else
@@ -34,13 +34,24 @@ class InfectedSpawnManager
 
     vector GetRandomSpawnPosition(float radius)
     {
-        float xAdd = Math.RandomFloat(-radius, radius);
-        float zAdd = Math.RandomFloat(-radius, radius);
+        vector spawnPosition;
 
-        float xPos = Math.RandomFloat(0, 6000) + xAdd;
-        float zPos = Math.RandomFloat(0, 8000) + zAdd;
+        while (true)
+        {
+            float xAdd = Math.RandomFloat(-radius, radius);
+            float zAdd = Math.RandomFloat(-radius, radius);
 
-        vector spawnPosition = Vector(xPos, GetGame().SurfaceY(xPos, zPos), zPos);
+            float xPos = Math.RandomFloat(0, 6000) + xAdd;
+            float zPos = Math.RandomFloat(0, 8000) + zAdd;
+
+            spawnPosition = Vector(xPos, GetGame().SurfaceY(xPos, zPos), zPos);
+
+            // Check if the spawn position is on land
+            if (IsPositionOnLand(spawnPosition))
+            {
+                break;
+            }
+        }
 
         // Print the spawn position
         Print("[FLDZ_InfectedSpawnManager] Spawn position: " + spawnPosition);
@@ -48,8 +59,17 @@ class InfectedSpawnManager
         return spawnPosition;
     }
 
+    bool IsPositionOnLand(vector position)
+    {
+        if (!GetGame().SurfaceIsSea(position[0], position[2]))
+        {
+            return true;
+        }
 
-    void SpawnInfectedEntities()
+        return false;
+    }
+
+    void SpawnInfectedEntitiesAndContainer()
     {
         if (m_Config.InfectedClassNames_1.Count() == 0 && m_Config.InfectedClassNames_2.Count() == 0)
         {
@@ -91,5 +111,48 @@ class InfectedSpawnManager
 
             // Additional code for setting up the infected entity, if needed
         }
+
+        // Spawn the container if CanSpawnContainer is set to 1
+        if (m_Config.CanSpawnContainer == 1)
+        {
+            SpawnContainer(spawnPosition);
+        }
     }
-}
+
+    void SpawnContainer(vector spawnPosition)
+    {
+        if (m_Config.ContainerObject.Count() == 0 || m_Config.ContainerObjectLoot.Count() == 0)
+        {
+            Print("[FLDZ_InfectedSpawnManager] Configuration error: Invalid config or empty ContainerObject or ContainerObjectLoot arrays.");
+            return;
+        }
+
+        // Get a random container object and its corresponding loot
+        string containerObject = m_Config.ContainerObject.GetRandomElement();
+        string containerObjectLoot = m_Config.ContainerObjectLoot.GetRandomElement();
+
+        // Spawn the container at the specified position
+        EntityAI containerEntity = EntityAI.Cast(GetGame().CreateObject(containerObject, spawnPosition, false, true));
+
+        // Attach random loot to the container's inventory
+        ItemBase containerItem = ItemBase.Cast(containerEntity);
+        for (int i = 0; i < 10; i++)
+        {
+            containerItem.GetInventory().CreateInInventory(GetRandomLootItem());
+        }
+
+        // Print a message indicating the container spawn
+        Print("[FLDZ_InfectedSpawnManager] Container spawned at position: " + spawnPosition);
+    }
+
+    string GetRandomLootItem()
+    {
+        if (m_Config.ContainerObjectLoot.Count() == 0)
+        {
+            return "";
+        }
+
+        int randomIndex = Math.RandomInt(0, m_Config.ContainerObjectLoot.Count());
+        return m_Config.ContainerObjectLoot.Get(randomIndex);
+    }
+};
