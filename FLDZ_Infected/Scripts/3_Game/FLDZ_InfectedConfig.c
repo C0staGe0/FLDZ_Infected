@@ -1,16 +1,16 @@
 class FLDZ_InfectedConfig
 {
-    private static const string CONFIG_VERSION = "0.0.1";
+    private static const string CONFIG_VERSION = "0.0.2";
     private static const string FLDZ_InfectedModFolder = "$profile:\\FLDZ_Infected\\";
     private static const string FLDZ_InfectedConfigName = "FLDZ_InfectedConfig.json";
 
     string ConfigVersion = "";
 
     int EnableInfectedSpawn = 1; // 1 = Enabled, 0 = Disabled - Enables the infected spawn system on server start, without being set to 1 it will not work
-    int InfectedSpawnDelayAfterStartInMinutes = 5; // Delay in minutes after server start to enable infected spawn system if EnableInfectedSpawn = 1
+    int InfectedSpawnDelayAfterStartInMinutes = 1; // Delay in minutes after server start to enable infected spawn system if EnableInfectedSpawn = 1
     int InfectedSpawnAmount = 10; // Amount of infected to spawn
     int SpawnRadius = 1000; // Radius in meters around the center of the map to spawn infected
-    // int InfectedMovement = 1; // 1 = Enabled, 0 = Disabled - Enables infected movement towards nearest player
+    int CanSpawnContainer = 1; // 1 = Enabled, 0 = Disabled - If the loot container will be able to spawn with the horde
     autoptr TStringArray InfectedClassNames_1 = {
         "ZmbM_priestPopSkinny",
         "ZmbM_SkaterYoung_Grey",
@@ -159,6 +159,40 @@ class FLDZ_InfectedConfig
         "ZmbM_PatrolNormal_Flat",
         "ZmbM_PatrolNormal_PautRev",
         "ZmbM_PatrolNormal_Summer"
+    };
+    autoptr TStringArray ContainerObject = {
+        "SeaChest",
+        "Barrel_Blue",
+        "Barrel_Green",
+        "Barrel_Red",
+        "Barrel_Yellow",
+        "BarrelHoles_Blue",
+        "BarrelHoles_Green",
+        "BarrelHoles_Red",
+        "BarrelHoles_Yellow"
+    };
+    autoptr TStringArray ContainerObjectLoot = {
+        "M4A1_Green",
+        "M4_RISHndgrd_Green",
+        "M4_MPBttstck",
+        "M4_Suppressor",
+        "ACOGOptic",
+        "Mag_STANAG_30Rnd",
+        "Ammo_556x45",
+        "Ammo_556x45",
+        "HuntingKnife",
+        "BakedBeansCan",
+        "Canteen",
+        "Battery9V"
+        "WaterBottle",
+        "SpaghettiCan",
+        "UMP45",
+        "M68Optic",
+        "PistolSuppressor",
+        "Mag_UMP_25Rnd",
+        "Ammo_45ACP",
+        "TunaCan",
+        "RDG5Grenade"
     };
 
     void Load()
