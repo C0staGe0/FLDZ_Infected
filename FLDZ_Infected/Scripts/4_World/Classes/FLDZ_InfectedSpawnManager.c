@@ -3,6 +3,8 @@ class InfectedSpawnManager
     private ref FLDZ_InfectedConfig m_Config;
     private bool m_IsSpawnEnabled;
     private int m_InfectedSpawnDelay;
+    private bool m_CanSpawnContainer
+    private bool m_CanSpawnWorldObject;
 
     void Init()
     {
@@ -11,6 +13,8 @@ class InfectedSpawnManager
 
         m_IsSpawnEnabled = m_Config.EnableInfectedSpawn == 1;
         m_InfectedSpawnDelay = m_Config.InfectedSpawnDelayAfterStartInMinutes;
+        m_CanSpawnContainer = m_Config.CanSpawnContainer == 1;
+        m_CanSpawnWorldObject = m_Config.CanSpawnWorldObject == 1;
 
         if (m_IsSpawnEnabled)
         {
@@ -113,9 +117,18 @@ class InfectedSpawnManager
         }
 
         // Spawn the container if CanSpawnContainer is set to 1
-        if (m_Config.CanSpawnContainer == 1)
+        if (m_CanSpawnContainer)
         {
-            SpawnContainer(spawnPosition);
+            SpawnContainer(firstEntityPosition);
+
+            // Offset the first entity position for world object spawning
+            firstEntityPosition = firstEntityPosition + Vector(10, 0, 10);
+        }
+
+        // Spawn the world object if CanSpawnWorldObject is set to 1
+        if (m_CanSpawnWorldObject)
+        {
+            SpawnWorldObject(firstEntityPosition);
         }
     }
 
@@ -143,6 +156,44 @@ class InfectedSpawnManager
 
         // Print a message indicating the container spawn
         Print("[FLDZ_InfectedSpawnManager] Container spawned at position: " + spawnPosition);
+    }
+
+    void SpawnWorldObject(vector spawnPosition)
+    {
+        if (m_Config.WorldObject.Count() == 0)
+        {
+            Print("[FLDZ_InfectedSpawnManager] Configuration error: Invalid config or empty WorldObject array.");
+            return;
+        }
+
+        // Get a random world object from the configuration
+        string worldObject = m_Config.WorldObject.GetRandomElement();
+
+        // Offset the spawn position slightly above the ground
+        float groundOffset = 2.0;
+        spawnPosition = SnapToGround(spawnPosition) + Vector(0, groundOffset, 0);
+
+        // Spawn the world object at the specified position
+        EntityAI worldObjectEntity = EntityAI.Cast(GetGame().CreateObject(worldObject, spawnPosition, false, true));
+
+        if (worldObjectEntity)
+        {
+            // Print a message indicating the world object spawn
+            Print("[FLDZ_InfectedSpawnManager] World object spawned at position: " + spawnPosition);
+        }
+        else
+        {
+            Print("[FLDZ_InfectedSpawnManager] Error spawning world object: " + worldObject);
+        }
+    }
+
+    vector SnapToGround(vector pos)
+    {
+        float pos_x = pos[0];
+        float pos_z = pos[2];
+        float pos_y = GetGame().SurfaceY(pos_x, pos_z);
+
+        return Vector(pos_x, pos_y, pos_z);
     }
 
     string GetRandomLootItem()
