@@ -9,7 +9,7 @@ All i ask is that credits be given and maybe a link or something. If you want to
 # Discord Link
 https://discord.gg/wAJqeXCK5v
 
-# Version 0.0.2
+# Version 0.0.3
 This is very basic as of now but i intend on making it bigger and better. If anyone has an idea or ways to improve i am all ears and open to contribution if you wish.
 
 # Default Config
